@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/jms
+						http://www.springframework.org/schema/jms/spring-jms.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://activemq.apache.org/schema/core
+						http://activemq.apache.org/schema/core/activemq-core.xsd
+						http://www.springframework.org/schema/tx
+						https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<!-- 
+	<bean
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jmsproperties.properties</value>
+			</list>
+		</property> 
+	</bean>  -->
+	
+	
+	 <!-- Connection Factory -->
+    <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="userName" value="admin" />
+        <property name="password" value="password" />
+    </bean>
+    
+    <!-- Pooled Connection Factory (Optional, for performance) -->
+    <bean id="pooledConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <constructor-arg ref="jmsConnectionFactory"/>
+        <property name="sessionCacheSize" value="10"/>
+    </bean>
+
+    <!--JMS Template -->
+    <bean id = "jmsTemplate" class = "org.springframework.jms.core.JmsTemplate">
+        <property name = "connectionFactory" ref = "pooledConnectionFactory"/>
+        <property name="defaultDestinationName" value="TestQ" />
+    </bean>
+
+    <!-- Destination (Queue or Topic) -->
+    <bean id="TestQ" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="TestQ"/>
+    </bean>	
+	
+</beans>
+
+
+
