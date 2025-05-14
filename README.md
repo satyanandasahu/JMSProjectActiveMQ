@@ -20,4 +20,8 @@ JMS Project Active MQ
       3. Build Message Sender
       4. Run as java application in eclipse 
 
-Note: This project uses the code of previous project (SpringAnnotationRESTAPIupdate) to show case the application of JMS & Active MQ 6.1.6
+Note: 
+1. This project uses the code of previous project (SpringAnnotationRESTAPIupdate) to show case the application of JMS & Active MQ 6.1.6
+2. To better understand this project watch the video on youtube linke: https://youtu.be/bCV7au1G_8Y
+
+
